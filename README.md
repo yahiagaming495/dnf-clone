@@ -17,7 +17,9 @@ I made my own simple package manager, It uses libcurl to be send requests to the
 
 
 Arch Linux: ```sudo pacman -S gcc curl```
+
 Fedora: ```sudo dnf install gcc libcurl libcurl-devel```
+
 Debian: ```sudo apt install gcc libcurl4```
 
 # **Compilation:**
