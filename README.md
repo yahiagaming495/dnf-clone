@@ -3,7 +3,9 @@ A DNF clone made in pure C (package manager)
 
 > [!WARNING]
 > This package manager is still not complete and shouldn't be used for daily use
+
 > In the next few releases the package manager should have be able to download required dependencies for packages automatically and search for packages
+
 > So I think I can say that it you will be able to use it daily in the few releases (v0.0.2-alpha and v0.0.3-alpha)
 
 DNF is the fedora package manager, A package manager is a program that makes it's users able to install, update, and uninstall packages
