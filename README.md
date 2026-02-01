@@ -24,7 +24,8 @@ Debian: ```sudo apt install gcc libcurl4```
 
 # **Compilation:**
 
-On all systems, ```cc -o dnf dnf.c```
+On all systems, ```cc -lcurl -o dnf dnf.c```
+Or if you want to use ```gcc```, ```gcc -lcurl -o dnf dnf.c```
 
 # **How to use**
 
@@ -39,13 +40,4 @@ The mode 'download' downloads the RPM of the requested file without installing i
 A full list of modes can be found in the application by using the ```--modes-list``` option.
 
 The program currently also doesn't have the ability to download required dependencies for the program. Although it will be added in the next release of the program (v0.0.2-alpha)
-
-
-
-
-
-
-
-
-
 
