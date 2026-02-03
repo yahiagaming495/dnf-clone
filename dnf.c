@@ -27,7 +27,7 @@ void modeDownload(char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  char rpmfilename[255] = "I";
+  char rpmfilename[255] = " ";
 
   if (strstr(rpmfilename, ".rpm") == NULL) {
     strcat(packagename, ".rpm");
@@ -49,13 +49,17 @@ void modeDownload(char *argv[]) {
   }
   
   else {
-    char useroption[2];
+    char useroption[2]; // Contains one letter + NULL terminator
     printf("The file already exists\n");
     printf("Do you want to download it again? (Y/n)\n");
 
     if (fgets(useroption, 2, stdin) == NULL) {
       fprintf(stderr, "Couldn't read user input");
       exit(EXIT_FAILURE);
+    }
+
+    if (strcmp(useroption, "y") == 0 || strcmp(useroption, "Y") == 0) {
+      remove(rpmfilename); // Remove the file to download it again after
     }
 
     if (strcmp(useroption, "N") == 0 || strcmp(useroption, "n") == 0) {
@@ -84,14 +88,16 @@ void modeDownload(char *argv[]) {
 
   int statusCode = 0;
   curl_easy_getinfo(curl, CURLINFO_HTTP_CODE, &statusCode);
-
     
   if (statusCode != 200) {
     fprintf(stderr, "Failed to send a request to the website: %s\n", url);
     fclose(fp);
-    remove(packagename); // For some reason the rpmfilename variable was empty here, but not before a few lines (?)
+
+    remove(rpmfilename);
     exit(EXIT_FAILURE);
   }
+
+  curl_easy_cleanup(curl);
 }
 
 void modeInstall(char *argv[]) {
@@ -103,7 +109,8 @@ void modeInstall(char *argv[]) {
   snprintf(rpm_command, sizeof(rpm_command), "%s%s", BASE_RPM_COMMAND, packagename);
 
   system(rpm_command);
-  
+
+  remove(packagename);
   exit(EXIT_SUCCESS);
 }
 
@@ -111,7 +118,7 @@ void modeSearch() { // The function will be made in a later version
   exit(EXIT_SUCCESS);
 }
 
-int handleArgs(char *argv[]) {    
+void handleArgs(char *argv[]) {    
   if (strcmp(argv[1], "--modes-list") == 0) {
     printf("\t\t Avaliable modes \t\t\n");
     printf("download -- Download the package without installing it\n");
@@ -150,5 +157,6 @@ int main(int argc, char *argv[]) {
   }
 
   handleArgs(argv);
+
   return 0;
 }
